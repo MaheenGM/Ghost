@@ -1,0 +1,48 @@
+[0:00 - HOOK]
+Imagine this: you deploy a smart, helpful AI coordinator to manage your company's tasks, and overnight, a simple prompt injection attack compromises it, completely exposing your raw database of user passwords. Today, I am showing you Ghost, a secure cryptographic concierge agent that makes that nightmare impossible.
+
+(pause)
+
+[0:20 - WHAT IT IS]
+Ghost is a zero-trust personal assistant built for the AI Agents Intensive Vibe Coding Capstone Project. It belongs to the Concierge track and guarantees data protection using cryptographic data partitioning and a tamper-evident audit ledger.
+
+(pause)
+
+[0:40 - SHOW THE BANNER]
+(show assets/cover_page_banner.png)
+As you can see on the screen, Ghost acts as a secure cryptographic vault, ensuring that the central coordinating agent never has plain-text access to your credentials or notes.
+
+(pause)
+
+[1:00 - ARCHITECTURE]
+(show assets/architecture_diagram.png)
+Let us walk through the architecture on our workflow diagram. 
+First, when a user sends a query, it enters the Security Checkpoint node. This node scrubs PII and checks for prompt injections. 
+If it is clean, the query routes to the Orchestrator node, which activates the orchestrator_agent.
+If cryptographic operations are requested, the orchestrator_agent delegates to the crypto_agent using an AgentTool. The crypto_agent performs encryption and decryption locally in memory.
+For database reads and writes, the orchestrator_agent calls the db_agent, which uses an MCP server toolset to save partitions and write cryptographically linked log blocks to the audit ledger.
+And finally, the blue node represents our Human-in-the-loop gate, where the orchestrator pauses and asks the user for their master password to authorize vault decryption.
+
+(pause)
+
+[2:00 - LIVE DEMO]
+(switch to playground at localhost:18081)
+Let us see a live demo of our three core test cases.
+First, we will store a credential. I will type: "Store the password SuperSecret123! for service Github."
+Notice how the workflow automatically halts and asks for a master password. I will type my master key. The crypto_agent now encrypts the text, and the db_agent saves it as partition Github, appending a hash block to the ledger.
+Second, let us retrieve it. I will type: "Retrieve the credentials for Github."
+Ghost uses my master key to read partition Github, decrypts it in memory, and presents the plain text credential safely.
+Third, let us audit the database. I will type: "Verify the database audit ledger integrity."
+Ghost runs the verify_ledger_integrity tool, validating the SHA-256 links across all transaction blocks, confirming the database is secure.
+
+(pause)
+
+[3:00 - SECURITY & MCP]
+To make this happen, the Security Checkpoint runs Regex PII scrubbing for credit cards and SSNs, checks for injection attacks, and outputs JSON logs. 
+Meanwhile, our custom MCP Server exposes clean, stdio-based APIs for writing partitions, reading partitions, and running the ledger verification.
+
+(pause)
+
+[3:30 - IMPACT / CLOSE]
+By partitioning data and validating execution using a secure hash chain, Ghost shows that we can deploy powerful personal concierge assistants that protect raw user data, even if the primary coordinator is compromised. 
+Thank you, and welcome to zero-trust AI coordination.
